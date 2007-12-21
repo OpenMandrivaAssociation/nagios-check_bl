@@ -11,6 +11,7 @@ URL:		http://www.bashton.com/content/nagiosplugins
 Source0:	http://www.bashton.com/downloads/%{name}-%{version}.tar.bz2
 Source1:	check_bl.cfg
 Requires:	nagios
+BuildRoot:	%{_tmppath}/%{name}-buildroot
 
 %description
 A Nagios plugin to check whether a server is in any known anti-spam blocklists.
