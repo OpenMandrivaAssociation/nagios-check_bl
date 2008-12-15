@@ -4,44 +4,47 @@
 Summary:	A Nagios plugin to check against RBL
 Name:		nagios-check_bl
 Version:	1.0
-Release:	%mkrel 6
+Release:	%mkrel 7
 License:	GPL
 Group:		Networking/Other
 URL:		http://www.bashton.com/content/nagiosplugins
 Source0:	http://www.bashton.com/downloads/%{name}-%{version}.tar.bz2
-Source1:	check_bl.cfg
 Requires:	nagios
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildArch:	noarch
+BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
 A Nagios plugin to check whether a server is in any known anti-spam blocklists.
 
 %prep
-
 %setup -q
-
-cp %{SOURCE1} check_bl.cfg
-
-# lib64 fix
-perl -pi -e "s|/usr/lib|%{_libdir}|g" check_bl
-perl -pi -e "s|_LIBDIR_|%{_libdir}|g" *.cfg
 
 %build
 
 %install
 rm -rf %{buildroot}
 
-install -d %{buildroot}%{_libdir}/nagios/plugins
-install -d %{buildroot}%{_sysconfdir}/nagios/plugins.d
+install -d -m 755 %{buildroot}%{_datadir}/nagios/plugins
+install -m  755 check_bl %{buildroot}%{_datadir}/nagios/plugins/
 
-install -m0755 check_bl %{buildroot}%{_libdir}/nagios/plugins/
-install -m0644 *.cfg %{buildroot}%{_sysconfdir}/nagios/plugins.d/
+perl -pi -e 's|/usr/lib/nagios|%{_datadir}/nagios|' \
+    %{buildroot}%{_datadir}/nagios/plugins/check_bl
 
+install -d -m 755 %{buildroot}%{_sysconfdir}/nagios/plugins.d
+cat > %{buildroot}%{_sysconfdir}/nagios/plugins.d/check_bl.cfg <<'EOF'
+define command {
+	command_name    check_bl
+	command_line    %{_datadir}/nagios/plugins/check_bl -H $HOSTADDRESS$ -B sbl-xbl.spamhaus.org,bl.spamcop.net
+}
+EOF
+
+%if %mdkversion < 200900
 %post
 /sbin/service nagios condrestart > /dev/null 2>/dev/null || :
 
 %postun
 /sbin/service nagios condrestart > /dev/null 2>/dev/null || :
+%endif
 
 %clean
 rm -rf %{buildroot}
@@ -49,5 +52,5 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root)
 %doc README
-%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/nagios/plugins.d/check_bl.cfg
-%attr(0755,root,root) %{_libdir}/nagios/plugins/check_bl
+%config(noreplace) %{_sysconfdir}/nagios/plugins.d/check_bl.cfg
+%{_datadir}/nagios/plugins/check_bl
