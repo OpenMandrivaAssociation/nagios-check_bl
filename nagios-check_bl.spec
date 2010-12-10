@@ -4,7 +4,7 @@
 Summary:	A Nagios plugin to check against RBL
 Name:		nagios-check_bl
 Version:	1.0
-Release:	%mkrel 8
+Release:	%mkrel 9
 License:	GPL
 Group:		Networking/Other
 URL:		http://www.bashton.com/content/nagiosplugins
