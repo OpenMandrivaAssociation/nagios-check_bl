@@ -54,3 +54,51 @@ rm -rf %{buildroot}
 %doc README
 %config(noreplace) %{_sysconfdir}/nagios/plugins.d/check_bl.cfg
 %{_datadir}/nagios/plugins/check_bl
+
+
+%changelog
+* Fri Dec 10 2010 Oden Eriksson <oeriksson@mandriva.com> 1.0-9mdv2011.0
++ Revision: 620431
+- the mass rebuild of 2010.0 packages
+
+* Mon Sep 14 2009 Thierry Vignaud <tv@mandriva.org> 1.0-8mdv2010.0
++ Revision: 440197
+- rebuild
+
+* Mon Dec 15 2008 Guillaume Rousse <guillomovitch@mandriva.org> 1.0-7mdv2009.1
++ Revision: 314628
+- now a noarch package
+- use a herein document for configuration
+- reply on filetrigger for reloading nagios
+
+* Sun Jul 20 2008 Oden Eriksson <oeriksson@mandriva.com> 1.0-6mdv2009.0
++ Revision: 239083
+- rebuild
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Tue Apr 17 2007 Oden Eriksson <oeriksson@mandriva.com> 1.0-5mdv2008.0
++ Revision: 13789
+- use the new /etc/nagios/plugins.d scandir
+
+
+* Wed Nov 15 2006 Oden Eriksson <oeriksson@mandriva.com> 1.0-4mdv2007.0
++ Revision: 84571
+- Import nagios-check_bl
+
+* Thu Aug 10 2006 Oden Eriksson <oeriksson@mandriva.com> 1.0-4mdk
+- disable debug packages
+
+* Sun Jul 31 2005 Oden Eriksson <oeriksson@mandriva.com> 1.0-3mdk
+- this cannot be a noarch package
+
+* Fri Jun 17 2005 Oden Eriksson <oeriksson@mandriva.com> 1.0-2mdk
+- nuke dot, fix noarch
+
+* Fri Jun 17 2005 Oden Eriksson <oeriksson@mandriva.com> 1.0-1mdk
+- initial Mandriva package
+
